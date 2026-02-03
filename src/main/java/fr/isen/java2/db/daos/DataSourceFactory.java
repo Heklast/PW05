@@ -18,6 +18,8 @@ public class DataSourceFactory {
 	/**
 	 * @return a connection to the SQLite Database
 	 * 
+	 * This is bonus part 1, I use the DriverManager instead of DataSource.
+	 * Also added the JDBC_URL variable above.
 	 */
 	 public static Connection getConnection() {
 	        try {

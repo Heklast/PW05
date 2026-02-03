@@ -36,6 +36,9 @@
 			<version>3.27.7</version>
 			<scope>test</scope>
 		</dependency>
+		<!-- Commenting the sqlite dependency will not affect the project 
+		compiling as I did bonus part 1, i.e. changed to using a Driver.
+		The right scope here is runtime, it is not needed during compile time -->
 		<dependency>
 		    <groupId>org.xerial</groupId>
 		    <artifactId>sqlite-jdbc</artifactId>
