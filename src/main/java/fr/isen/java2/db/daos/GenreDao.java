@@ -14,7 +14,7 @@ import fr.isen.java2.db.entities.Genre;
 public class GenreDao {
 
 	/**
-	 * Lists all genres stored in our genre database
+	 * Lists all genres stored in our genre database.
 	 *
 	 * @return a list of all genres
 	 */
@@ -37,7 +37,7 @@ public class GenreDao {
 	
 	
 	/**
-	 * Gets specific genre based on name of genre
+	 * Gets specific genre based on name of genre.
 	 *
 	 * @return an optional (bonus2) of the genre, or empty if genre not found
 	 */
@@ -61,7 +61,7 @@ public class GenreDao {
 	}
 
 	/**
-	 * Adds a genre to our database with a name
+	 * Adds a genre to our database with a name.
 	 */
 	public void addGenre(String name) {
 		try(Connection connection=DataSourceFactory.getConnection()){
