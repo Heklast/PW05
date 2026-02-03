@@ -1,14 +1,12 @@
 package fr.isen.java2.db.daos;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
 import static org.assertj.core.api.Assertions.tuple;
 
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.Statement;
-import java.time.LocalDate;
 import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -21,7 +19,7 @@ public class MovieDaoTestCase {
 	private final MovieDao movieDao = new MovieDao();
 	@BeforeEach
 	public void initDb() throws Exception {
-		Connection connection = DataSourceFactory.getDataSource().getConnection();
+		Connection connection = DataSourceFactory.getConnection();
 		Statement stmt = connection.createStatement();
 		stmt.executeUpdate(
 				"CREATE TABLE IF NOT EXISTS genre (idgenre INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT , name VARCHAR(50) NOT NULL);");
@@ -74,7 +72,7 @@ public class MovieDaoTestCase {
 		 	Movie HSM=new Movie(2, "HSM", date.toLocalDate(), genre, 114, "director 2", "summary of the second movi");
 			movieDao.addMovie(HSM);
 			// THEN
-			Connection connection = DataSourceFactory.getDataSource().getConnection();
+			Connection connection = DataSourceFactory.getConnection();
 			Statement statement = connection.createStatement();
 			ResultSet resultSet = statement.executeQuery("SELECT * FROM movie WHERE title='HSM'");
 			assertThat(resultSet.next()).isTrue();

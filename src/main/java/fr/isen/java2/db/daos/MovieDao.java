@@ -6,7 +6,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,7 +16,7 @@ public class MovieDao {
 
 	public List<Movie> listMovies() {
 		List<Movie> listOfMovies= new ArrayList<>();
-		try (Connection conn=DataSourceFactory.getDataSource().getConnection()){
+		try (Connection conn=DataSourceFactory.getConnection()){
 			try(Statement statement=conn.createStatement()){
 				try(ResultSet results=statement.executeQuery("SELECT * FROM movie JOIN genre ON movie.genre_id = genre.idgenre")){
 					while(results.next()) {
@@ -48,7 +47,7 @@ public class MovieDao {
 	
 	public List<Movie> listMoviesByGenre(String genreName) {
 		List<Movie> listOfMoviesByGenre=new ArrayList<>();
-		try(Connection connection=DataSourceFactory.getDataSource().getConnection()){
+		try(Connection connection=DataSourceFactory.getConnection()){
 			try(PreparedStatement statement=connection.prepareStatement("SELECT * FROM movie JOIN genre ON movie.genre_id = genre.idgenre WHERE genre.name = ?")){
 				statement.setString(1, genreName);
 			 try(ResultSet results=statement.executeQuery()){
@@ -74,7 +73,7 @@ public class MovieDao {
 	}
 
 	public Movie addMovie(Movie movie) {
-		try(Connection connection=DataSourceFactory.getDataSource().getConnection()){
+		try(Connection connection=DataSourceFactory.getConnection()){
 			String query="INSERT INTO movie(title,release_date,genre_id,duration,director,summary) VALUES(?,?,?,?,?,?)";
 			try(PreparedStatement statement=connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)){
 				GenreDao genreDao = new GenreDao();
