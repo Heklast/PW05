@@ -5,7 +5,10 @@ import static org.assertj.core.api.Assertions.fail;
 import static org.assertj.core.api.Assertions.tuple;
 
 import java.sql.Connection;
+import java.sql.Date;
+import java.sql.ResultSet;
 import java.sql.Statement;
+import java.time.LocalDate;
 import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -58,13 +61,28 @@ public class MovieDaoTestCase {
 	 public void shouldListMoviesByGenre() {
 		 List<Movie> movies = movieDao.listMoviesByGenre("Comedy");
 			// THEN
-			assertThat(movies).hasSize(2);
+		 assertThat(movies).hasSize(2);
 			assertThat(movies).extracting("id", "title").containsOnly(tuple(2, "My Title 2"),
 					tuple(3, "Third title"));
 	 }
 	
 	 @Test
 	 public void shouldAddMovie() throws Exception {
-		 fail("Not yet implemented");
+		// WHEN 
+		 	Date date = new Date(2);
+			Genre genre=new Genre (3,"Comedy");
+		 	Movie HSM=new Movie(2, "HSM", date.toLocalDate(), genre, 114, "director 2", "summary of the second movi");
+			movieDao.addMovie(HSM);
+			// THEN
+			Connection connection = DataSourceFactory.getDataSource().getConnection();
+			Statement statement = connection.createStatement();
+			ResultSet resultSet = statement.executeQuery("SELECT * FROM movie WHERE title='HSM'");
+			assertThat(resultSet.next()).isTrue();
+			assertThat(resultSet.getInt("idmovie")).isNotNull();
+			assertThat(resultSet.getString("title")).isEqualTo("HSM");
+			assertThat(resultSet.next()).isFalse();
+			resultSet.close();
+			statement.close();
+			connection.close();
 	 }
 }

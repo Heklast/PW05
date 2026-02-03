@@ -49,15 +49,15 @@ public class MovieDao {
 	public List<Movie> listMoviesByGenre(String genreName) {
 		List<Movie> listOfMoviesByGenre=new ArrayList<>();
 		try(Connection connection=DataSourceFactory.getDataSource().getConnection()){
-			try(PreparedStatement statement=connection.prepareStatement("SELECT * FROM movie JOIN genre ON movie.genre_id = genre.idgenre WHERE genre.name = '?'")){
+			try(PreparedStatement statement=connection.prepareStatement("SELECT * FROM movie JOIN genre ON movie.genre_id = genre.idgenre WHERE genre.name = ?")){
 				statement.setString(1, genreName);
 			 try(ResultSet results=statement.executeQuery()){
 				 while(results.next()) {
 					 Genre genre = new Genre(
-						        results.getInt("idgenre"),
+						        results.getInt("genre_id"),
 						        results.getString("name")
 						    );
-					 Movie movie=new Movie(results.getString("title"),
+					 Movie movie=new Movie(results.getInt("idmovie"),results.getString("title"),
 								results.getDate("release_date").toLocalDate(),
 								genre,
 								results.getInt("duration"),

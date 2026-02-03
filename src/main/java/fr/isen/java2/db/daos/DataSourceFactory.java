@@ -7,6 +7,7 @@ import org.sqlite.SQLiteDataSource;
 public class DataSourceFactory {
 
 	private static SQLiteDataSource dataSource;
+	
 
 	private DataSourceFactory() {
 		// This is a static class that should not be instantiated.
